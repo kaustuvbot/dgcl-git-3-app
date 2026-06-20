@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevOps Git Guide</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #111827, #2563eb);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: white;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #111827;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .section h2 {
+            color: #1d4ed8;
+            margin-bottom: 15px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2563eb;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: #eef4ff;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        code {
+            background: #111827;
+            color: #22c55e;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .command-box {
+            background: #111827;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .quiz {
+            margin-top: 15px;
+        }
+
+        .quiz button {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #2563eb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .quiz button:hover {
+            background: #eef4ff;
+        }
+
+        #quizResult {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111827;
+            color: white;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>DevOps Git Guide</h1>
+        <p>Learn Git, GitHub, CI/CD, Docker, Kubernetes, and DevOps workflows in one place.</p>
+    </header>
+
+    <nav>
+        <a onclick="scrollToSection('about')">About</a>
+        <a onclick="scrollToSection('topics')">Topics</a>
+        <a onclick="scrollToSection('commands')">Git Commands</a>
+        <a onclick="scrollToSection('quiz')">Quiz</a>
+    </nav>
+
+    <div class="container">
+
+        <section id="about" class="section">
+            <h2>About This Application</h2>
+            <p>
+                This DevOps/Git Guide application is designed for beginners who want to understand Git and DevOps
+                concepts quickly. It provides short explanations, useful commands, and a mini quiz for practice.
+            </p>
+        </section>
+
+        <section id="topics" class="section">
+            <h2>DevOps Learning Topics</h2>
+
+            <input type="text" class="search-box" id="searchInput"
+                placeholder="Search topics like Git, Docker, CI/CD..." onkeyup="searchTopics()" />
+
+            <div class="cards" id="topicCards">
+                <div class="card">
+                    <h3>Git Basics</h3>
+                    <p>Learn repositories, commits, branches, staging area, and version control.</p>
+                </div>
+
+                <div class="card">
+                    <h3>GitHub</h3>
+                    <p>Host code online, collaborate with teams, create pull requests, and manage issues.</p>
+                </div>
+
+                <div class="card">
+                    <h3>CI/CD</h3>
+                    <p>Automate testing, building, and deployment using pipelines.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Docker</h3>
+                    <p>Package applications into containers for consistent deployment.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Kubernetes</h3>
+                    <p>Run, scale, and manage containerized applications in clusters.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Infrastructure as Code</h3>
+                    <p>Use tools like Terraform to create cloud infrastructure using code.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="commands" class="section">
+            <h2>Useful Git Commands</h2>
+
+            <p><strong>Initialize a repository:</strong></p>
+            <div class="command-box" id="cmd1">git init</div>
+            <button class="copy-btn" onclick="copyCommand('cmd1')">Copy</button>
+
+            <p><strong>Check file status:</strong></p>
+            <div class="command-box" id="cmd2">git status</div>
+            <button class="copy-btn" onclick="copyCommand('cmd2')">Copy</button>
+
+            <p><strong>Add files to staging area:</strong></p>
+            <div class="command-box" id="cmd3">git add .</div>
+            <button class="copy-btn" onclick="copyCommand('cmd3')">Copy</button>
+
+            <p><strong>Commit changes:</strong></p>
+            <div class="command-box" id="cmd4">git commit -m "Initial commit"</div>
+            <button class="copy-btn" onclick="copyCommand('cmd4')">Copy</button>
+
+            <p><strong>Push code to GitHub:</strong></p>
+            <div class="command-box" id="cmd5">git push origin main</div>
+            <button class="copy-btn" onclick="copyCommand('cmd5')">Copy</button>
+        </section>
+
+        <section id="quiz" class="section">
+            <h2>Mini Git Quiz</h2>
+
+            <p><strong>Question:</strong> Which command is used to check the current Git status?</p>
+
+            <div class="quiz">
+                <button onclick="checkAnswer(false)">git commit</button>
+                <button onclick="checkAnswer(true)">git status</button>
+                <button onclick="checkAnswer(false)">git push</button>
+                <button onclick="checkAnswer(false)">git branch</button>
+            </div>
+
+            <p id="quizResult"></p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>DevOps Git Guide &copy; 2026 | Built with HTML, CSS, and JavaScript</p>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        function copyCommand(commandId) {
+            const commandText = document.getElementById(commandId).innerText;
+
+            navigator.clipboard.writeText(commandText)
+                .then(() => {
+                    alert("Command copied: " + commandText);
+                })
+                .catch(() => {
+                    alert("Failed to copy command.");
+                });
+        }
+
+        function searchTopics() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const cards = document.querySelectorAll("#topicCards .card");
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+
+                if (text.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        function checkAnswer(isCorrect) {
+            const result = document.getElementById("quizResult");
+
+            if (isCorrect) {
+                result.innerText = "Correct! git status shows the current state of your repository.";
+                result.style.color = "green";
+            } else {
+                result.innerText = "Wrong answer. Try again.";
+                result.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
