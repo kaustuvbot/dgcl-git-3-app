@@ -26,6 +26,8 @@
             --code-text: #22c55e;
             --border: #ddd;
             --shadow: rgba(0, 0, 0, 0.1);
+            --hero-start: #111827;
+            --hero-end: #2563eb;
         }
 
         body.dark {
@@ -40,30 +42,50 @@
             --code-text: #86efac;
             --border: #334155;
             --shadow: rgba(0, 0, 0, 0.4);
+            --hero-start: #020617;
+            --hero-end: #1e40af;
+        }
+
+        body.cyber {
+            --bg: #08111f;
+            --text: #e0f2fe;
+            --card-bg: #0f2238;
+            --section-bg: #0b1b2d;
+            --nav-bg: #071426;
+            --primary: #00e5ff;
+            --primary-dark: #14b8a6;
+            --code-bg: #020617;
+            --code-text: #00ff99;
+            --border: #164e63;
+            --shadow: rgba(0, 229, 255, 0.18);
+            --hero-start: #020617;
+            --hero-end: #0891b2;
         }
 
         body {
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         header {
-            background: linear-gradient(135deg, #111827, #2563eb);
+            background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
             color: white;
-            padding: 40px 20px;
+            padding: 45px 20px;
             text-align: center;
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             margin-bottom: 10px;
         }
 
         header p {
             font-size: 1.1rem;
             opacity: 0.9;
+            max-width: 750px;
+            margin: auto;
         }
 
         nav {
@@ -77,6 +99,7 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            flex-wrap: wrap;
         }
 
         nav a {
@@ -92,9 +115,9 @@
 
         .theme-btn {
             background: var(--primary);
-            color: white;
+            color: #00111f;
             border: none;
-            padding: 8px 14px;
+            padding: 8px 15px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
@@ -116,12 +139,17 @@
             margin-bottom: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 12px var(--shadow);
-            transition: 0.3s;
+            border: 1px solid var(--border);
+            transition: 0.3s ease;
         }
 
         .section h2 {
             color: var(--primary);
             margin-bottom: 15px;
+        }
+
+        .section p {
+            margin-bottom: 12px;
         }
 
         .cards {
@@ -136,7 +164,7 @@
             padding: 20px;
             border-radius: 10px;
             border-left: 5px solid var(--primary);
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         .card:hover {
@@ -149,37 +177,6 @@
             color: var(--text);
         }
 
-        code {
-            background: var(--code-bg);
-            color: var(--code-text);
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
-        .command-box {
-            background: var(--code-bg);
-            color: var(--code-text);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 12px 0;
-            overflow-x: auto;
-        }
-
-        .copy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 7px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-bottom: 15px;
-        }
-
-        .copy-btn:hover {
-            background: var(--primary-dark);
-        }
-
         .search-box {
             width: 100%;
             padding: 12px;
@@ -189,6 +186,37 @@
             font-size: 1rem;
             background: var(--card-bg);
             color: var(--text);
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary);
+        }
+
+        .command-box {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            font-family: Consolas, monospace;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: #00111f;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
         }
 
         .quiz {
@@ -206,6 +234,7 @@
             color: var(--text);
             cursor: pointer;
             text-align: left;
+            transition: 0.2s ease;
         }
 
         .quiz button:hover {
@@ -231,7 +260,7 @@
             }
 
             nav {
-                flex-wrap: wrap;
+                gap: 12px;
             }
         }
     </style>
@@ -241,7 +270,9 @@
 
     <header>
         <h1>DevOps Git Guide</h1>
-        <p>Learn Git, GitHub, CI/CD, Docker, Kubernetes, and DevOps workflows in one place.</p>
+        <p>
+            Learn Git, GitHub, CI/CD, Docker, Kubernetes, and DevOps workflows in one place.
+        </p>
     </header>
 
     <nav>
@@ -249,7 +280,7 @@
         <a onclick="scrollToSection('topics')">Topics</a>
         <a onclick="scrollToSection('commands')">Git Commands</a>
         <a onclick="scrollToSection('quiz')">Quiz</a>
-        <button class="theme-btn" onclick="toggleTheme()">🌙 Dark</button>
+        <button class="theme-btn" onclick="changeTheme()">🌙 Dark</button>
     </nav>
 
     <div class="container">
@@ -258,7 +289,11 @@
             <h2>About This Application</h2>
             <p>
                 This DevOps/Git Guide application is designed for beginners who want to understand Git and DevOps
-                concepts quickly. It provides short explanations, useful commands, and a mini quiz for practice.
+                concepts quickly.
+            </p>
+            <p>
+                It provides short explanations, useful commands, search functionality, copy buttons, and a mini quiz for
+                practice.
             </p>
         </section>
 
@@ -323,6 +358,14 @@
             <p><strong>Push code to GitHub:</strong></p>
             <div class="command-box" id="cmd5">git push origin main</div>
             <button class="copy-btn" onclick="copyCommand('cmd5')">Copy</button>
+
+            <p><strong>Create a new branch:</strong></p>
+            <div class="command-box" id="cmd6">git checkout -b feature/login</div>
+            <button class="copy-btn" onclick="copyCommand('cmd6')">Copy</button>
+
+            <p><strong>Merge a branch:</strong></p>
+            <div class="command-box" id="cmd7">git merge feature/login</div>
+            <button class="copy-btn" onclick="copyCommand('cmd7')">Copy</button>
         </section>
 
         <section id="quiz" class="section">
@@ -349,25 +392,44 @@
     <script>
         const themeButton = document.querySelector(".theme-btn");
 
-        function toggleTheme() {
-            document.body.classList.toggle("dark");
+        const themes = ["light", "dark", "cyber"];
+        let currentThemeIndex = 0;
 
-            if (document.body.classList.contains("dark")) {
+        function applyTheme(theme) {
+            document.body.classList.remove("dark", "cyber");
+
+            if (theme === "dark") {
+                document.body.classList.add("dark");
+                themeButton.innerText = "⚡ Theme 2";
+            } else if (theme === "cyber") {
+                document.body.classList.add("cyber");
                 themeButton.innerText = "☀️ Light";
-                localStorage.setItem("theme", "dark");
             } else {
                 themeButton.innerText = "🌙 Dark";
-                localStorage.setItem("theme", "light");
             }
+
+            localStorage.setItem("theme", theme);
+        }
+
+        function changeTheme() {
+            currentThemeIndex++;
+
+            if (currentThemeIndex >= themes.length) {
+                currentThemeIndex = 0;
+            }
+
+            applyTheme(themes[currentThemeIndex]);
         }
 
         function loadTheme() {
-            const savedTheme = localStorage.getItem("theme");
+            const savedTheme = localStorage.getItem("theme") || "light";
+            currentThemeIndex = themes.indexOf(savedTheme);
 
-            if (savedTheme === "dark") {
-                document.body.classList.add("dark");
-                themeButton.innerText = "☀️ Light";
+            if (currentThemeIndex === -1) {
+                currentThemeIndex = 0;
             }
+
+            applyTheme(themes[currentThemeIndex]);
         }
 
         loadTheme();
